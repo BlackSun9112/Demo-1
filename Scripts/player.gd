@@ -1,13 +1,16 @@
 extends CharacterBody2D
 @onready var animations: AnimatedSprite2D = $Animations
 
-
+var alive = true
 const SPEED = 300.0
 const JUMP_VELOCITY = -900.0
 
 
 func _physics_process(delta: float) -> void:
 	# Animatie
+	if alive == false:
+		return
+		
 	if velocity.x > 1 or velocity.x < -1:
 		animations.animation = "Walk"
 	else:
@@ -35,3 +38,6 @@ func _physics_process(delta: float) -> void:
 		animations.flip_h = false
 	elif direction == -1.0:
 		animations.flip_h = true
+func die() -> void:
+	animations.animation = "Dying"
+	alive = false 
